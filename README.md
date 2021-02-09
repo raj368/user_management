@@ -1,6 +1,6 @@
 # user_management
 
-create a secret.py file in webprojet and add
+create a secret.py file in webproject and add
 
 
 def get_secret():
