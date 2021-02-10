@@ -45,7 +45,27 @@ class UserManager(BaseUserManager):
 
 
 
+
 class User(PermissionsMixin, AbstractBaseUser):
+
+    class Gender(models.TextChoices):
+        MALE = 'M'
+        FEMALE = 'F'
+        OTHERS = 'O'
+
+    class MaritalStatus(models.TextChoices):
+        MARRIED = 'MR'
+        SINGLE = 'SI'
+        SEPARATED = 'SE'
+        DIVORCE = 'DV'
+        OTHERS = 'OT'
+
+    class Role(models.TextChoices):
+       ADMIN = "AD"
+       INFLUENCER = "IR"
+       PARTNER = "PR"
+       USER = "UR"
+
 
     username = models.CharField(db_index=True, max_length=255, unique=True)
     email = models.EmailField(
@@ -56,9 +76,15 @@ class User(PermissionsMixin, AbstractBaseUser):
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    phone_number = models.CharField(max_length=10, null=True)
+    role = models.CharField(choices=Role.choices, max_length=10, null=True)
+    dob = models.DateField(null=True)
+    marital_status = models.CharField(choices=MaritalStatus.choices, max_length=10, null=True)
+    gender = models.CharField(choices=Gender.choices, max_length=10, null=True)
+    resident_address = models.TextField(null=True)
+
 
     USERNAME_FIELD = 'email'
-
     REQUIRED_FIELDS = ('username',)
 
     objects = UserManager()
